@@ -14,7 +14,9 @@ def get_duration():
     durations = []
     for url in urls.split(','):
         try:
-            audio = MP3(BytesIO(requests.get(url.strip()).content))
+            headers = {"User-Agent": "Mozilla/5.0"}
+            r = requests.get(url.strip(), headers=headers)
+            audio = MP3(BytesIO(r.content))
             durations.append(round(audio.info.length, 2))
         except Exception as e:
             durations.append(None)
